@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Treeview Demo</title>
+    <style>
+        ul {
+            list-style-type: none
+        }
+
+        .hidden {
+            display: none
+        }
+
+        li.hasChild:before {
+            content: '▾ ';
+        }
+
+        li.hasHidden:before {
+            content: '▸ ';
+        }
+    </style>
+    <script src="treeview.js"></script>
+</head>
+<body>
+    <ul id="treeview">
+
+    </ul>
+    <script>
+        const tree = new Tree({
+            treeview: document.getElementById('treeview')
+        });
+
+        fetch('./demo.json')
+            .then(response => response.json())
+            .then(nodes => {
+                console.log(nodes);
+                tree.load(nodes, 0);
+            });
+
+        //triggers for each row in the treeview
+        treeview.addEventListener('nodeAdded', function (e) {
+            //e.detail contains an array with:
+            //e.detail[0] = current object
+            //e.detail[1] = current object
+            console.log(e.detail);
+
+        }, false);
+
+
+        treeview.addEventListener('nodeClick', function (e) {
+            console.log(e);
+        }, false);
+
+
+    </script>
+</body>
+</html>
